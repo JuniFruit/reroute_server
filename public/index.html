@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reroute server</title>
+  </head>
+  <body>
+    <main>
+      <h1>Server is online</h1>
+      <h4>
+        Server will be put back into sleep mode in approximately 5 mins. Autoreload in:
+        <span id="time"></span>
+      </h4>
+      <h4>Stay on this page until process is over. Once sync is done you can close this page.</h4>
+      <h5>This page will be autoreloading to keep the server up</h5>
+    </main>
+    <script>
+      let span = document.getElementById("time");
+      const timeToReload = Date.now() + 1000 * 60 * 3; // 3 mins
+      function updateTimer() {
+        let timeElapsed = timeToReload - Date.now();
+        if (timeElapsed <= 0) return window.location.reload();
+        let secs = timeElapsed / 1000;
+        let mins = secs >= 60 ? Math.trunc(secs / 60) : 0;
+
+        mins = mins % 60;
+        secs = secs % 60;
+        span.innerHTML = `${mins}:${Math.trunc(secs)}`;
+
+        setTimeout(() => {
+          updateTimer();
+        }, 1000);
+      }
+
+      updateTimer();
+    </script>
+  </body>
+</html>
